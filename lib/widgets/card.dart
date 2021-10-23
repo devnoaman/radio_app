@@ -37,7 +37,7 @@ class _FmChannelState extends State<FmChannel> {
         width: 139,
         height: 139,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(15),
             bottomLeft: Radius.circular(15),
@@ -45,12 +45,12 @@ class _FmChannelState extends State<FmChannel> {
           ),
           border: !widget.isPlaying
               ? Border.all(
-                  color: Color.fromRGBO(50, 50, 78, 1),
+                  color: const Color.fromRGBO(50, 50, 78, 1),
                   width: 2,
                 )
               : Border.all(),
           color: widget.isPlaying
-              ? Color.fromRGBO(255, 41, 109, 1)
+              ? const Color.fromRGBO(255, 41, 109, 1)
               : Colors.transparent,
         ),
         child: Padding(
@@ -59,7 +59,7 @@ class _FmChannelState extends State<FmChannel> {
             children: <Widget>[
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 widget.isPlaying
-                    ? Text(
+                    ? const Text(
                         'Playing',
                         textAlign: TextAlign.left,
                         style: TextStyle(
@@ -71,10 +71,9 @@ class _FmChannelState extends State<FmChannel> {
                             fontWeight: FontWeight.bold,
                             height: 1),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
                 GestureDetector(
                   onTap: () {
-                    print(isFav);
                     setState(() {
                       isFav = !isFav;
                     });
@@ -98,7 +97,9 @@ class _FmChannelState extends State<FmChannel> {
                       widget.chNumber,
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 1),
+                          color: widget.isPlaying
+                              ? const Color.fromRGBO(255, 255, 255, 1)
+                              : Colors.grey,
                           fontFamily: 'SF Pro Display',
                           fontSize: 30,
                           letterSpacing:
@@ -111,7 +112,9 @@ class _FmChannelState extends State<FmChannel> {
                     widget.chName,
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                        color: Color.fromRGBO(255, 255, 255, 1),
+                        color: widget.isPlaying
+                            ? const Color.fromRGBO(255, 255, 255, 1)
+                            : Colors.grey,
                         fontFamily: 'SF Pro Display',
                         fontSize: 15,
                         letterSpacing:

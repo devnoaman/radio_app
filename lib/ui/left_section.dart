@@ -1,9 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class RightPane extends StatefulWidget {
-  RightPane({Key? key}) : super(key: key);
+  const RightPane({Key? key}) : super(key: key);
 
   @override
   State<RightPane> createState() => _RightPaneState();
@@ -16,7 +14,7 @@ List<String> side = [
 ];
 
 class _RightPaneState extends State<RightPane> {
-  int selectedIndex = 0;
+  int selectedIndex = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +22,11 @@ class _RightPaneState extends State<RightPane> {
       // mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         Image.asset('assets/Group 2.png'),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         ListView.builder(
@@ -44,7 +42,6 @@ class _RightPaneState extends State<RightPane> {
                     setState(() {
                       selectedIndex = i;
                     });
-                    print('selected index $i');
                   },
                   isActive: index == selectedIndex,
                 ),
@@ -84,12 +81,12 @@ class SideMenu extends StatelessWidget {
                   ? Container(
                       width: 15,
                       height: 15,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Color.fromRGBO(5, 216, 232, 1),
                         borderRadius:
                             BorderRadius.all(Radius.elliptical(15, 15)),
                       ))
-                  : SizedBox(),
+                  : const SizedBox(),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
@@ -97,7 +94,7 @@ class SideMenu extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: isActive
-                          ? Color.fromRGBO(255, 255, 255, 1)
+                          ? const Color.fromRGBO(255, 255, 255, 1)
                           : Colors.grey,
                       fontFamily: 'SF Pro Display',
                       fontSize: 20,

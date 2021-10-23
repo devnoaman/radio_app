@@ -1,15 +1,14 @@
 import 'dart:math';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:radio_app/animation/scaling.dart';
 
 import 'package:radio_app/main.dart';
 import 'package:radio_app/widgets/card.dart';
 
 class LeftPane extends StatefulWidget {
-  LeftPane({Key? key}) : super(key: key);
+  const LeftPane({Key? key}) : super(key: key);
 
   @override
   State<LeftPane> createState() => _LeftPaneState();
@@ -37,7 +36,7 @@ class _LeftPaneState extends State<LeftPane> {
               RichText(
                 text: TextSpan(
                   text: 'Hello ',
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       fontSize: 30),
@@ -57,7 +56,7 @@ class _LeftPaneState extends State<LeftPane> {
           ),
           Transform.rotate(
             angle: -1.5308806722812968e-22 * (pi / 180),
-            child: Text(
+            child: const Text(
               'Popular',
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -72,21 +71,19 @@ class _LeftPaneState extends State<LeftPane> {
           ),
           GridView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 16.0,
                 mainAxisSpacing: 16.0,
               ),
               itemCount: channels.length,
               itemBuilder: (context, index) {
-                print(channels[index]['title']);
                 return InkWell(
                   // onTap: () => print(index),
                   child: FmChannel(
                     isPlaying: (index == playingIndex),
                     onTap: (index) {
-                      print(index);
                       setState(() {
                         playingIndex = index;
                       });
@@ -102,41 +99,43 @@ class _LeftPaneState extends State<LeftPane> {
                   ),
                 );
               }),
+          //TODO UNCOMMENT THIS LINE
+          Scaling(),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     ActionButton(
+          //       image: 'assets/left_button.svg',
+          //       child: Transform.rotate(
+          //         angle: 45,
+          //         child: const Icon(
+          //           Icons.play_arrow_rounded,
+          //           size: 25,
+          //           color: Colors.white,
+          //         ),
+          //       ),
+          //     ),
+          //     const PlayButton(),
+          //     const ActionButton(
+          //       image: 'assets/left_button.svg',
+          //       child: Icon(
+          //         Icons.play_arrow_rounded,
+          //         size: 25,
+          //         color: Colors.white,
+          //       ),
+          //     ),
+          //   ],
+          // ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ActionButton(
-                image: 'assets/left_button.svg',
-                child: Transform.rotate(
-                  angle: 45,
-                  child: Icon(
-                    Icons.play_arrow_rounded,
-                    size: 25,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              PlayButton(),
-              ActionButton(
-                image: 'assets/left_button.svg',
-                child: Icon(
-                  Icons.play_arrow_rounded,
-                  size: 25,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Icon(
+              const Icon(
                 Icons.volume_up,
                 color: Color(0xff32324E),
               ),
               Slider(
                 min: 0,
                 max: 100,
-                activeColor: Color(0xff05D8E8),
+                activeColor: const Color(0xff05D8E8),
                 value: _value,
                 onChanged: (value) {
                   setState(() {
@@ -147,7 +146,7 @@ class _LeftPaneState extends State<LeftPane> {
               Text(
                 '${_value.toInt()}%',
                 textAlign: TextAlign.left,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Color.fromRGBO(255, 255, 255, 1),
                     fontFamily: 'SF Pro Display',
                     fontSize: 10,
@@ -198,7 +197,7 @@ class PlayButton extends StatelessWidget {
           children: [
             SvgPicture.asset('assets/Polygon 13.svg',
                 semanticsLabel: 'Acme Logo'),
-            Icon(
+            const Icon(
               Icons.play_arrow_rounded,
               size: 45,
               color: Colors.white,
@@ -216,7 +215,7 @@ List<Map> channels = [
   {"number": '94.3', "title": 'Diegoveloper'},
   {"number": '98.5', "title": 'Brayan'},
   {"number": '91.0', "title": 'Argel'},
-  {"number": '104.2', "title": 'Fluttter'},
+  {"number": '104.2', "title": 'Flutter'},
   {"number": '92.7', "title": 'Miau Miua'},
   // {"number": '90.5', "title": 'Divelement'},
 ];
