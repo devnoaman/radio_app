@@ -100,32 +100,35 @@ class _LeftPaneState extends State<LeftPane> {
                 );
               }),
           //TODO UNCOMMENT THIS LINE
-          Scaling(),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     ActionButton(
-          //       image: 'assets/left_button.svg',
-          //       child: Transform.rotate(
-          //         angle: 45,
-          //         child: const Icon(
-          //           Icons.play_arrow_rounded,
-          //           size: 25,
-          //           color: Colors.white,
-          //         ),
-          //       ),
-          //     ),
-          //     const PlayButton(),
-          //     const ActionButton(
-          //       image: 'assets/left_button.svg',
-          //       child: Icon(
-          //         Icons.play_arrow_rounded,
-          //         size: 25,
-          //         color: Colors.white,
-          //       ),
-          //     ),
-          //   ],
-          // ),
+          // Scaling(),
+          Container(
+            height: 130,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ActionButton(
+                  image: 'assets/left_button.svg',
+                  child: Transform.rotate(
+                    angle: 45,
+                    child: const Icon(
+                      Icons.play_arrow_rounded,
+                      size: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                PlayButton(),
+                const ActionButton(
+                  image: 'assets/left_button.svg',
+                  child: Icon(
+                    Icons.play_arrow_rounded,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
           Row(
             children: [
               const Icon(
@@ -181,31 +184,72 @@ class ActionButton extends StatelessWidget {
   }
 }
 
-class PlayButton extends StatelessWidget {
-  const PlayButton({
+class PlayButton extends StatefulWidget {
+  PlayButton({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<PlayButton> createState() => _PlayButtonState();
+}
+
+class _PlayButtonState extends State<PlayButton>
+    with SingleTickerProviderStateMixin {
+  bool expanded = true;
+  late AnimationController controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 400),
+      reverseDuration: Duration(milliseconds: 400),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        SvgPicture.asset('assets/Polygon 5.svg', semanticsLabel: 'Acme Logo'),
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            SvgPicture.asset('assets/Polygon 13.svg',
-                semanticsLabel: 'Acme Logo'),
-            const Icon(
-              Icons.play_arrow_rounded,
-              size: 45,
-              color: Colors.white,
-            )
-          ],
-        ),
-        SvgPicture.asset('assets/Polygon 12.svg', semanticsLabel: 'Acme Logo'),
-      ],
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          expanded ? controller.forward() : controller.reverse();
+          expanded = !expanded;
+        });
+      },
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Scaling(
+              shouldAnimate: expanded,
+              child: SvgPicture.asset('assets/Polygon 5.svg',
+                  semanticsLabel: 'Acme Logo')),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Scaling(
+                shouldAnimate: expanded,
+                child: SvgPicture.asset('assets/Polygon 13.svg',
+                    semanticsLabel: 'Acme Logo'),
+              ),
+
+              AnimatedIcon(
+                icon: AnimatedIcons.play_pause,
+                progress: controller,
+                color: Colors.white,
+                size: 35,
+                semanticLabel: 'Show menu',
+              ),
+              // Icons.play_arrow_rounded,
+              // size: 45,
+              // color: Colors.white,
+            ],
+          ),
+          Scaling(
+              shouldAnimate: expanded,
+              child: SvgPicture.asset('assets/Polygon 12.svg',
+                  semanticsLabel: 'Acme Logo')),
+        ],
+      ),
     );
   }
 }

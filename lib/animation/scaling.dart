@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Scaling extends StatefulWidget {
-  // final Widget child;
+  final Widget child;
+  final bool shouldAnimate;
 
-  // const Scaling({Key? key, required this.child}) : super(key: key);
+  const Scaling({
+    Key? key,
+    required this.child,
+    required this.shouldAnimate,
+  }) : super(key: key);
 
   @override
   _ScalingState createState() => _ScalingState();
@@ -22,10 +27,10 @@ class _ScalingState extends State<Scaling> with SingleTickerProviderStateMixin {
     _controller = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
 
-    _widthAnimation = Tween<double>(begin: 0.0, end: 40.0)
+    _widthAnimation = Tween<double>(begin: 40.0, end: 50.0)
         .animate(CurvedAnimation(curve: Curves.easeInOut, parent: _controller));
 
-    _heightAnimation = Tween<double>(begin: 0.0, end: 40.0)
+    _heightAnimation = Tween<double>(begin: 100.0, end: 120.0)
         .animate(CurvedAnimation(curve: Curves.easeInOut, parent: _controller));
 
     _controller.addListener(() {
@@ -33,6 +38,8 @@ class _ScalingState extends State<Scaling> with SingleTickerProviderStateMixin {
     });
 
     _controller.forward();
+    _controller.repeat(reverse: true);
+
     // _controller.
   }
 
@@ -40,10 +47,10 @@ class _ScalingState extends State<Scaling> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      width: MediaQuery.of(context).size.width * _widthAnimation.value,
-      height: _heightAnimation.value,
-      child:
-          SvgPicture.asset('assets/Polygon 6.svg', semanticsLabel: 'Acme Logo'),
-    );
+        // width: MediaQuery.of(context).size.width * _widthAnimation.value,
+        height: widget.shouldAnimate ? _heightAnimation.value : 120,
+        child: widget.child
+        // SvgPicture.asset('assets/Polygon 6.svg', semanticsLabel: 'Acme Logo'),
+        );
   }
 }
